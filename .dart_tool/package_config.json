@@ -56,20 +56,8 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "flutter_lints",
-      "rootUri": "file:///Users/yuanhao/.pub-cache/hosted/pub.flutter-io.cn/flutter_lints-2.0.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
-    },
-    {
       "name": "flutter_test",
       "rootUri": "file:///Users/yuanhao/Library/Flutter/gitsdk/flutter/packages/flutter_test",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
-    },
-    {
-      "name": "lints",
-      "rootUri": "file:///Users/yuanhao/.pub-cache/hosted/pub.flutter-io.cn/lints-2.0.0",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
@@ -152,7 +140,7 @@
       "languageVersion": "2.17"
     }
   ],
-  "generated": "2022-05-31T06:34:41.985865Z",
+  "generated": "2022-06-01T06:58:29.305200Z",
   "generator": "pub",
   "generatorVersion": "2.17.1"
 }

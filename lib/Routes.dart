@@ -1,6 +1,5 @@
-// import 'package:flutter/material.dart';
-import 'main.dart';
+import 'package:xiechengDemo/navigator/Navigator.dart';
 
-var routes = {
-  "/": (context) => Home(), // 主页
+var my_routes = {
+  "/": (context) => TabNavigatorBar(), // TabNavitorBar
 };
