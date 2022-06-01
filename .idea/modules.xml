@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/xie_cheng.iml" filepath="$PROJECT_DIR$/xie_cheng.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/xie_cheng_android.iml" filepath="$PROJECT_DIR$/android/xie_cheng_android.iml" />
+    </modules>
+  </component>
+</project>
