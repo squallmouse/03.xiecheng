@@ -29,9 +29,8 @@ class _TabNavigatorBarState extends State<TabNavigatorBar> {
   final PageController _pageController = PageController(
     initialPage: 0, // 初始化就是0页
   );
+
   //  nav的items
-  Color _defaultColor = Colors.grey;
-  final _activeColor = Colors.blue;
   List<BottomNavigationBarItem> _bottomNavList =
       List.generate(_barTitle.length, (index) {
     return BottomNavigationBarItem(
@@ -46,6 +45,7 @@ class _TabNavigatorBarState extends State<TabNavigatorBar> {
 //👆🏻*********************************/
 // setstate
   _currentPageChange(int index) {
+    print(index);
     setState(() {
       _currentPage = index;
     });
@@ -68,7 +68,10 @@ class _TabNavigatorBarState extends State<TabNavigatorBar> {
       //.. 底部的bottomBar
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentPage,
-        onTap: _currentPageChange,
+        onTap: (index) {
+          _pageController.jumpToPage(index); // page
+          _currentPageChange(index);
+        },
         type: BottomNavigationBarType.fixed,
         items: _bottomNavList,
       ),
