@@ -1,6 +1,7 @@
-import 'dart:ffi';
+// ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 class HomePage extends StatefulWidget {
@@ -11,8 +12,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final ScrollController _scrollController = ScrollController();
-
   double _opacity = 0.0;
   static const APPBAR_SCROLL_OFFSET = 160;
 
@@ -21,7 +20,7 @@ class _HomePageState extends State<HomePage> {
 //👆🏻*********************************/
 //
   _onScroll(offset) {
-    print(offset);
+    debugPrint("${offset}");
     double alpha = offset / APPBAR_SCROLL_OFFSET;
     if (alpha < 0) {
       alpha = 0;
@@ -89,7 +88,9 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-// 轮播图
+//*  ------------------------------ */
+//*  轮播图
+
 class ImageSwiper extends StatelessWidget {
   //↓↓↓↓↓↓↓↓↓↓↓↓↓**************************************/
   ///-->   属性
