@@ -1,8 +1,7 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:xiechengDemo/dao/home_dao.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -14,6 +13,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   double _opacity = 0.0;
   static const APPBAR_SCROLL_OFFSET = 160;
+
+  @override
+  void initState() {
+    super.initState();
+    HomeDao().homeRequest();
+  }
 
 //↓↓↓↓↓↓↓↓↓↓↓↓↓**************************************/
   ///-->   方法
