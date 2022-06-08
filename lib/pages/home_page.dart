@@ -1,7 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-// ignore: import_of_legacy_library_into_null_safe
+
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:xiechengDemo/dao/home_dao.dart';
+
+import 'package:xiechengDemo/dao/http_dao.dart';
+import 'package:xiechengDemo/model/home/banner_model.dart';
+
+import 'package:xiechengDemo/model/home/home_model.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -13,17 +19,42 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   double _opacity = 0.0;
   static const APPBAR_SCROLL_OFFSET = 160;
-
+  HomeModel? _homeModel;
   @override
   void initState() {
     super.initState();
-    HomeDao().homeRequest();
+    loadData();
   }
 
 //↓↓↓↓↓↓↓↓↓↓↓↓↓**************************************/
   ///-->   方法
 //👆🏻*********************************/
-//
+// 获取首页数据 方法1
+  loadData() {
+    HttpDao.fetchData(HOMEURL).then((value) {
+      _homeModel = HomeModel.fromjson(value!);
+      setState(() {
+        // 获取都数据后,刷新界面
+      });
+    }).catchError((error) {
+      debugPrint(error);
+    }).whenComplete(() {
+      debugPrint("首页数据获取 whenComplete");
+    });
+  }
+
+// 获取首页数据 方法2
+  loadData2() async {
+    try {
+      await HttpDao.fetchData(HOMEURL).then((value) {
+        _homeModel = HomeModel.fromjson(value!);
+      });
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+// 滚动方法
   _onScroll(offset) {
     debugPrint("${offset}");
     double alpha = offset / APPBAR_SCROLL_OFFSET;
@@ -65,7 +96,9 @@ class _HomePageState extends State<HomePage> {
               child: Container(
                 child: ListView(
                   children: [
-                    ImageSwiper(), //  轮播图
+                    //  轮播图
+                    ImageSwiper(_homeModel?.bannerList ?? []),
+
                     Container(height: 300, color: Colors.amber), //
                     Container(height: 300, color: Colors.blue),
                     Container(height: 300, color: Colors.red),
@@ -100,28 +133,35 @@ class ImageSwiper extends StatelessWidget {
   //↓↓↓↓↓↓↓↓↓↓↓↓↓**************************************/
   ///-->   属性
   //👆🏻*********************************/
-  List _imageUrls = [
-    'http://pages.ctrip.com/commerce/promote/20180718/yxzy/img/640sygd.jpg',
-    'https://dimg04.c-ctrip.com/images/700u0r000000gxvb93E54_810_235_85.jpg',
-    'https://dimg04.c-ctrip.com/images/700c10000000pdili7D8B_780_235_57.jpg'
-  ];
+  List _imageUrls = [];
+
 //↓↓↓↓↓↓↓↓↓↓↓↓↓**************************************/
   ///-->   方法
 //👆🏻*********************************/
+  ImageSwiper(this._imageUrls);
   @override
   Widget build(BuildContext context) {
     return Container(
       // height: 180,
       child: AspectRatio(
         aspectRatio: 16 / 9,
+        // 轮播图  Swiper
         child: Swiper(
-          pagination: SwiperPagination(),
-          autoplay: true, //  是否自动轮播图片
+          pagination: _imageUrls.length > 0 ? SwiperPagination() : null,
+          autoplay: _imageUrls.length > 0 ? true : false, //  是否自动轮播图片
           itemCount: _imageUrls.length, // 图片个数
           itemBuilder: (context, index) {
-            return Image.network(
-              _imageUrls[index],
-              fit: BoxFit.cover,
+            BannerModel bannerModel = _imageUrls[index];
+            // print(bannerModel.icon);
+            print(index);
+            return InkWell(
+              onTap: () {
+                debugPrint("图片按钮被点击 -- ${bannerModel.url}");
+              },
+              child: Image.network(
+                bannerModel.icon,
+                fit: BoxFit.cover,
+              ),
             );
           },
         ),
