@@ -9,6 +9,8 @@ import 'package:xiechengDemo/model/home/banner_model.dart';
 
 import 'package:xiechengDemo/model/home/home_model.dart';
 
+import '../widgets/local_nav.dart';
+
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
 
@@ -44,15 +46,15 @@ class _HomePageState extends State<HomePage> {
   }
 
 // 获取首页数据 方法2
-  loadData2() async {
-    try {
-      await HttpDao.fetchData(HOMEURL).then((value) {
-        _homeModel = HomeModel.fromjson(value!);
-      });
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-  }
+  // loadData2() async {
+  //   try {
+  //     await HttpDao.fetchData(HOMEURL).then((value) {
+  //       _homeModel = HomeModel.fromjson(value!);
+  //     });
+  //   } catch (e) {
+  //     debugPrint(e.toString());
+  //   }
+  // }
 
 // 滚动方法
   _onScroll(offset) {
@@ -97,13 +99,13 @@ class _HomePageState extends State<HomePage> {
                 child: ListView(
                   children: [
                     //  轮播图
-                    ImageSwiper(_homeModel?.bannerList ?? []),
-
-                    Container(height: 300, color: Colors.amber), //
-                    Container(height: 300, color: Colors.blue),
-                    Container(height: 300, color: Colors.red),
-                    Container(height: 300, color: Colors.orange),
-                    Container(height: 300, color: Colors.purple),
+                    ImageSwiper(
+                      _homeModel?.bannerList ?? [],
+                    ),
+                    // 轮播图下面的 nav
+                    LocalNav(
+                      dataList: _homeModel?.localNavList,
+                    ),
                   ],
                 ),
               ),
@@ -133,7 +135,7 @@ class ImageSwiper extends StatelessWidget {
   //↓↓↓↓↓↓↓↓↓↓↓↓↓**************************************/
   ///-->   属性
   //👆🏻*********************************/
-  List _imageUrls = [];
+  List<BannerModel> _imageUrls;
 
 //↓↓↓↓↓↓↓↓↓↓↓↓↓**************************************/
   ///-->   方法
@@ -148,20 +150,20 @@ class ImageSwiper extends StatelessWidget {
         // 轮播图  Swiper
         child: Swiper(
           pagination: _imageUrls.length > 0 ? SwiperPagination() : null,
+          onTap: (index) {
+            BannerModel bannerModel = _imageUrls[index];
+            debugPrint("图片按钮被点击 -- ${bannerModel.url}");
+          },
           autoplay: _imageUrls.length > 0 ? true : false, //  是否自动轮播图片
+          duration: 1000, // 滑动时间
+          autoplayDelay: 5000, //轮播时间
           itemCount: _imageUrls.length, // 图片个数
           itemBuilder: (context, index) {
             BannerModel bannerModel = _imageUrls[index];
-            // print(bannerModel.icon);
-            print(index);
-            return InkWell(
-              onTap: () {
-                debugPrint("图片按钮被点击 -- ${bannerModel.url}");
-              },
-              child: Image.network(
-                bannerModel.icon,
-                fit: BoxFit.cover,
-              ),
+
+            return Image.network(
+              bannerModel.icon,
+              fit: BoxFit.cover,
             );
           },
         ),
