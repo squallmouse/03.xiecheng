@@ -74,6 +74,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // 主页背景色
+      backgroundColor: Color(0xffe2e2e2),
       body: MediaQuery.removePadding(
         context: context,
         removeTop: true,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:xiechengDemo/model/home/local_nav_model.dart';
+import 'package:xiechengDemo/widgets/webview_page.dart';
 
 class LocalNav extends StatefulWidget {
   late final List<LocalNavModel>? dataList;
@@ -18,7 +19,7 @@ class _LocalNavState extends State<LocalNav> {
       height: 64,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(6)),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: _items(context, widget.dataList),
     );
@@ -31,7 +32,7 @@ class _LocalNavState extends State<LocalNav> {
     datas.forEach((model) {
       items.add(_item(context, model));
     });
-    // Row
+    // padding 拉开左右间距
     return Padding(
       padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
       child: Row(
@@ -46,6 +47,20 @@ class _LocalNavState extends State<LocalNav> {
     return InkWell(
       onTap: () {
         debugPrint("click -- ${model.url}");
+        // Navigator.pushNamed(context, "/WebviewPage", arguments: test);
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) {
+              return WebviewPage(
+                url: model.url,
+                statusBarColor: model.statusBarColor,
+                hideAppBar: model.hideAppBar,
+                title: model.title,
+              );
+            },
+          ),
+        );
+        ;
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

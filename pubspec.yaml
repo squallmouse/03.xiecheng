@@ -31,6 +31,8 @@ dependencies:
     sdk: flutter
   flutter_swiper: ^1.1.6 # 轮播图
   http: ^0.13.4 # http
+  # webview_flutter: ^3.0.4 # webview
+  flutter_webview_plugin: ^0.4.0 #webview
 
 
   # The following adds the Cupertino Icons font to your application.
